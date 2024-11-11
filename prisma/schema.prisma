@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid()) @map("_id")                         
+  email       String   @unique
+  firstName   String?
+  lastName    String?
+  imageUrl    String?
+  clerkUserId String   @unique
+  cards     Card[]
+  categories Category[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  index     Int
+  cardCount Int      @default(0)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  cards     Card[]
+  
+  @@unique([userId, name])
+}
+
+model Card {
+  id          String    @id @default(cuid())
+  question    String
+  answer      String
+  tags        String[]
+  difficulty  String
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  audioUrls   Json?
+  stats       Json
+  history     Json[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
