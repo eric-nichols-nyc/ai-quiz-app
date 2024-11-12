@@ -1,9 +1,11 @@
 import { clerk, clerkSetup } from "@clerk/testing/playwright";
-import { test as setup } from "@playwright/test";
+import { chromium, FullConfig } from '@playwright/test';
 import path from "path";
 import fs from 'fs/promises';
 
-setup("global setup", async ({}) => {
+const authFile = path.join(__dirname, "../playwright/.clerk/user.json");
+
+async function globalSetup(config: FullConfig) {
   await clerkSetup();
 
   if (
@@ -14,12 +16,11 @@ setup("global setup", async ({}) => {
       "Please provide E2E_CLERK_USER_USERNAME and E2E_CLERK_USER_PASSWORD environment variables."
     );
   }
-});
 
-const authFile = path.join(__dirname, "../playwright/.clerk/user.json");
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
 
-setup("authenticate", async ({ page }) => {
-  await page.goto("/sign-in");
+  await page.goto("http://localhost:3000/sign-in");
   await clerk.signIn({
     page,
     signInParams: {
@@ -28,10 +29,15 @@ setup("authenticate", async ({ page }) => {
       password: process.env.E2E_CLERK_USER_PASSWORD!,
     },
   });
-  await page.goto("/");
+  
+  await page.goto("http://localhost:3000");
   await page.waitForSelector("h1:has-text('Flashcard App')");
 
   // Ensure the directory exists before saving the storage state
   await fs.mkdir(path.dirname(authFile), { recursive: true });
   await page.context().storageState({ path: authFile });
-});
+
+  await browser.close();
+}
+
+export default globalSetup;
