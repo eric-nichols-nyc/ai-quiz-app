@@ -1,0 +1,95 @@
+{
+  "cookies": [
+    {
+      "name": "__clerk_redirect_count",
+      "value": "1",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1731428075.037556,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "PTFf1LBxcynG0ojBTUZKFvtItLQZZzo2ge.t3t1GKKY-1731428072-1.0.1.1-FjClV2RZOjYLIDb1VQ_8Zy89yGMeJczjezXnpNRRMSyb_chGFArbC492jG1_7cifW00SD8HzQQ9Y7U9o4GHn6Q",
+      "domain": ".causal-gazelle-40.clerk.accounts.dev",
+      "path": "/",
+      "expires": 1731429872.379626,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "YJqxvzZBdNzt2CLyfzEVbGjwkhKDIeYek6w6zjBW4Nc-1731428072301-0.0.1.1-604800000",
+      "domain": ".causal-gazelle-40.clerk.accounts.dev",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__clerk_db_jwt",
+      "value": "dvb_2okysD5S61hon7eV30VEKvBnR9d",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__clerk_db_jwt_dJMyeiWn",
+      "value": "dvb_2okysD5S61hon7eV30VEKvBnR9d",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__session_dJMyeiWn",
+      "value": "eyJhbGciOiJSUzI1NiIsImNhdCI6ImNsX0I3ZDRQRDExMUFBQSIsImtpZCI6Imluc18ybTRPYXJmVkpDdGlENE9xUWpHbDczQ3R0a1kiLCJ0eXAiOiJKV1QifQ.eyJhenAiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJleHAiOjE3MzE0MjgxMzQsImlhdCI6MTczMTQyODA3NCwiaXNzIjoiaHR0cHM6Ly9jYXVzYWwtZ2F6ZWxsZS00MC5jbGVyay5hY2NvdW50cy5kZXYiLCJuYmYiOjE3MzE0MjgwNjQsInNpZCI6InNlc3NfMm9reXNPVDVac2tQZW55NDRQbG96cWJLcmIyIiwic3ViIjoidXNlcl8ybkxnTzVMVTJLQ0daUGdLWXI1bXpSbUJXTEQifQ.q9LsSFSNGSgFwTQlYsj6VVjijRxD8lTOBWEr8n5M7nbLCjRZraqk8G8HzjuKg-ZiSpCUSGkKBf_J4yeWYLAKldSkrD8aZsCX9FSibOqzqcRkChL4QvMDEFUZC9Xrh4bvi91OGLwFLJZ2XSzzbOMoVNLdaHePb5yQC0y5GM_NQA9zAF2REjs6jc9hIFZAalyg_foL9eI3Q0SE2Xfo0l6V58o35D6syNlEFhZTEj_Sd-tEY5RfKc-qCCAeB28akz3XXilay79mK8b-6HPVx-ibSQbjKlo0LCycRguZZAgVKP6H4cohiUrOza_vkz8tui4Rsjx2-CsROoONZJUyYNMfUg",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__session",
+      "value": "eyJhbGciOiJSUzI1NiIsImNhdCI6ImNsX0I3ZDRQRDExMUFBQSIsImtpZCI6Imluc18ybTRPYXJmVkpDdGlENE9xUWpHbDczQ3R0a1kiLCJ0eXAiOiJKV1QifQ.eyJhenAiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJleHAiOjE3MzE0MjgxMzQsImlhdCI6MTczMTQyODA3NCwiaXNzIjoiaHR0cHM6Ly9jYXVzYWwtZ2F6ZWxsZS00MC5jbGVyay5hY2NvdW50cy5kZXYiLCJuYmYiOjE3MzE0MjgwNjQsInNpZCI6InNlc3NfMm9reXNPVDVac2tQZW55NDRQbG96cWJLcmIyIiwic3ViIjoidXNlcl8ybkxnTzVMVTJLQ0daUGdLWXI1bXpSbUJXTEQifQ.q9LsSFSNGSgFwTQlYsj6VVjijRxD8lTOBWEr8n5M7nbLCjRZraqk8G8HzjuKg-ZiSpCUSGkKBf_J4yeWYLAKldSkrD8aZsCX9FSibOqzqcRkChL4QvMDEFUZC9Xrh4bvi91OGLwFLJZ2XSzzbOMoVNLdaHePb5yQC0y5GM_NQA9zAF2REjs6jc9hIFZAalyg_foL9eI3Q0SE2Xfo0l6V58o35D6syNlEFhZTEj_Sd-tEY5RfKc-qCCAeB28akz3XXilay79mK8b-6HPVx-ibSQbjKlo0LCycRguZZAgVKP6H4cohiUrOza_vkz8tui4Rsjx2-CsROoONZJUyYNMfUg",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__client_uat_dJMyeiWn",
+      "value": "1731428073",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "__client_uat",
+      "value": "1731428073",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1762964074,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    }
+  ],
+  "origins": []
+}
