@@ -13,17 +13,13 @@ const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
   const prevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(currentCardIndex - 1);
-      setIsFlipped(false);
-    }
+    setCurrentCardIndex(currentCardIndex - 1);
+    setIsFlipped(false);
   };
 
   const nextCard = () => {
-    if (currentCardIndex < flashcards.length - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-      setIsFlipped(false);
-    }
+    setCurrentCardIndex(currentCardIndex + 1);
+    setIsFlipped(false);
   };
   return (
     <div className="gallery flex items-center flex-col justify-center gap-3">
@@ -36,9 +32,21 @@ const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
         />
       </div>
       <div className="flex justify-between items-center gap-3">
-        <Button onClick={prevCard}>Prev</Button>
+        <Button 
+          onClick={prevCard} 
+          disabled={currentCardIndex === 0} 
+          className={`px-4 py-2 rounded-lg transition duration-300 ${currentCardIndex === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+        >
+          Prev
+        </Button>
         <div>{currentCardIndex + 1}/{flashcards.length}</div>
-        <Button onClick={nextCard}>Next</Button>
+        <Button 
+          onClick={nextCard} 
+          disabled={currentCardIndex === flashcards.length - 1} 
+          className={`px-4 py-2 rounded-lg transition duration-300 ${currentCardIndex === flashcards.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
