@@ -13,13 +13,17 @@ const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
   const prevCard = () => {
-    setCurrentCardIndex(currentCardIndex - 1);
-    setIsFlipped(false);
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(currentCardIndex - 1);
+      setIsFlipped(false);
+    }
   };
 
   const nextCard = () => {
-    setCurrentCardIndex(currentCardIndex + 1);
-    setIsFlipped(false);
+    if (currentCardIndex < flashcards.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
+      setIsFlipped(false);
+    }
   };
   return (
     <div className="gallery flex items-center flex-col justify-center gap-3">
