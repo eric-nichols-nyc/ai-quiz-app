@@ -1,16 +1,14 @@
 import React from 'react';
+import { CatCard } from './CatCard';
+import { sampleCategories } from '../data/sampleData';
 
 const CategoryList = () => {
-    const categories = ['Math', 'Science', 'History']; // Example categories
-
     return (
-        <ul>
-            {categories.map((category, index) => (
-                <li key={index}>
-                    <a href={`/categories/${category}`}>{category}</a>
-                </li>
+        <div className="flex flex-col gap-4 p-4">
+            {sampleCategories.map((category) => (
+                <CatCard key={category.id} category={category} />
             ))}
-        </ul>
+        </div>
     );
 };
 

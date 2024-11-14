@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-
 import localFont from "next/font/local";
+import StickyHeader from "../components/StickyHeader";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -28,10 +28,11 @@ export default function RootLayout({
   return (
     <ClerkProvider signInUrl="/sign-in" signUpUrl="/sign-up">
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <StickyHeader />
+          <div className="flex flex-col items-center border rounded-lg p-4">
           {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>

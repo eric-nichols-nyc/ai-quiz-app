@@ -3,7 +3,7 @@ import CategoryList from '@/components/CategoryList';
 
 const CategoriesPage = () => {
     return (
-        <div>
+        <div className="w-full">
             <h1>Your Categories</h1>
             <CategoryList />
         </div>
