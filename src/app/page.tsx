@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
-import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
-import LandingPage from "./landing/page";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -17,19 +16,13 @@ export default function Home() {
           priority
         />
         <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-        Flashcard App
-          </h1>
-        <LandingPage />
+          Flashcard App
+        </h1>
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           {auth()?.userId ? (
-            <>
-              <span className="text-sm sm:text-base">Welcome</span>
-              <SignOutButton>
-                <button className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44">
-                  Sign Out
-                </button>
-              </SignOutButton>
-            </>
+            <Link href="/categories">
+              <Button>View Categories</Button>
+            </Link>
           ) : (
             <Link
               className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"

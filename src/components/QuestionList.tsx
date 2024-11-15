@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import QuestionCard from './QuestionCard';
 
 type QuestionListProps = {
@@ -8,22 +8,16 @@ type QuestionListProps = {
 };
 
 const QuestionList: React.FC<QuestionListProps> = ({ questions, onEdit, onDelete }) => {
-    const [visibleAnswers, setVisibleAnswers] = useState<{ [key: string]: boolean }>({});
-
-    const toggleAnswerVisibility = (id: string) => {
-        setVisibleAnswers((prev) => ({ ...prev, [id]: !prev[id] }));
-    };
-
     return (
-        <div className="flex flex-col gap-4 w-full">
+        <div>
             {questions.map((question) => (
-                <QuestionCard 
-                    key={question.id} 
-                    question={question} 
-                    onEdit={onEdit} 
-                    onDelete={onDelete} 
-                    isAnswerVisible={!!visibleAnswers[question.id]} 
-                    toggleAnswerVisibility={() => toggleAnswerVisibility(question.id)} 
+                <QuestionCard
+                    key={question.id}
+                    question={question}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    isAnswerVisible={false}
+                    toggleAnswerVisibility={() => {}}
                 />
             ))}
         </div>
