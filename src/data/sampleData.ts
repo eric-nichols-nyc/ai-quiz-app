@@ -61,3 +61,9 @@ export const sampleCards: Card[] = [ // {{ edit_3 }}
         updatedAt: new Date(),
     },
 ];
+
+export const sampleItems = [
+    { id: '1', question: 'What is React?', answer: 'A JavaScript library for building user interfaces.' },
+    { id: '2', question: 'What is JSX?', answer: 'A syntax extension for JavaScript that looks similar to XML.' },
+    // Add more questions as needed
+];

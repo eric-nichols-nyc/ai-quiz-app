@@ -1,10 +1,11 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
-  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
+  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
     throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
@@ -48,10 +49,23 @@ export async function POST(req: Request) {
 
   // Do something with the payload
   // For this guide, you simply log the payload to the console
-  const { id } = evt.data
   const eventType = evt.type
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  console.log('Webhook body:', body)
+  // create a new user in the database on the user.create event
+  if (eventType === 'user.created') {
+    const { id, email_addresses, first_name, last_name, image_url } = evt.data
+
+    const user = {
+      clerkUserId: id,
+      email: email_addresses[0].email_address,
+      ...(first_name ? { firstName: first_name } : {}),
+      ...(last_name ? { lastName: last_name } : {}),
+      ...(image_url ? { imageUrl: image_url } : {})
+    }
+    await prisma.user.create({
+      data: user,
+    })
+    console.log(`Creating user in database: ${id}`)
+  }
 
   return new Response('', { status: 200 })
 }
