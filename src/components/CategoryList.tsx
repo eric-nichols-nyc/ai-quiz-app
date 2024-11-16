@@ -1,11 +1,14 @@
 import React from 'react';
 import { CatCard } from './CatCard';
-import { sampleCategories } from '../data/sampleData';
+import { Category } from '@prisma/client';
 
-const CategoryList = () => {
+type CategoryListProps = {
+    categories: Category[] | null;
+}
+const CategoryList = ({ categories }: CategoryListProps) => {
     return (
         <div className="flex flex-col gap-4 p-4">
-            {sampleCategories.map((category) => (
+            {categories?.map((category) => (
                 <CatCard key={category.id} category={category} />
             ))}
         </div>
