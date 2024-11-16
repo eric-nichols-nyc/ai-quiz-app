@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import localFont from "next/font/local";
 import StickyHeader from "../components/StickyHeader";
+import TanstackProvider from "@/providers/tanstack-provider";
+
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,10 +31,13 @@ export default function RootLayout({
     <ClerkProvider signInUrl="/sign-in" signUpUrl="/sign-up">
       <html lang="en" suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <TanstackProvider>
+
           <StickyHeader />
           <div className="flex flex-col items-center border rounded-lg p-4">
           {children}
-          </div>
+            </div>
+          </TanstackProvider>
         </body>
       </html>
     </ClerkProvider>
