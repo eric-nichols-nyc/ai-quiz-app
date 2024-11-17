@@ -16,6 +16,8 @@ const CategoriesPage = async () => {
     redirect("/sign-in");
   }
 
+  console.log("userId", userId);
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

@@ -1,10 +1,9 @@
 "use server";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
-import { Category } from "@prisma/client";
-import { revalidatePath } from "next/cache";
+import { Card, Category } from "@prisma/client";
 
-export async function createCategory(cat: Category) {
+export async function createCategory(name: string): Promise<Category> {
     // find user using clerk session
     const { userId } = auth();
     if (!userId) {
@@ -13,13 +12,13 @@ export async function createCategory(cat: Category) {
     // create category in user's account
 
     try {
+        console.log("Creating category:", name, userId);
         const category = await prisma.category.create({
             data: {
-                ...cat,
+                name,
                 userId
             }
         });
-        revalidatePath("/categories");
         return category;
     } catch (error) {
         console.error("Error creating category:", error);
@@ -40,4 +39,21 @@ export async function getCategories():Promise<Category[]> {
         }
     });
     return categories;
+}
+
+// get a category by id
+export async function getCategoryById(id: string): Promise<Category | null> {
+    const category = await prisma.category.findUnique({
+        where: { id }
+    });
+    return category;
+}
+
+
+// get an array of cards by category id
+export async function getCardsByCategoryId(id: string): Promise<Card[]> {
+    const cards = await prisma.card.findMany({
+        where: { categoryId: id }
+    });
+    return cards;
 }

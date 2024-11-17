@@ -23,11 +23,13 @@ model User {
 model Category {
   id        String   @id @default(cuid())
   name      String
-  index     Int
+  index     Int?      @default(autoincrement())
   cardCount Int      @default(0)
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   cards     Card[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   
   @@unique([userId, name])
 }

@@ -19,62 +19,14 @@ type CardTemplate = {
   history: never[];
 }
 
-type CategoryName = "Languages" | "Mathematics" | "Science";
+type CategoryName = "Mathematics" | "Science";
 
 const DEFAULT_CATEGORIES = [
-  { name: "Languages" as const, index: 0 },
-  { name: "Mathematics" as const, index: 1 },
-  { name: "Science" as const, index: 2 }
+  { name: "Mathematics" as const, index: 0 },
+  { name: "Science" as const, index: 1 }
 ];
 
 const DEFAULT_CARDS: Record<CategoryName, CardTemplate[]> = {
-  "Languages": [
-    {
-      question: "What is 'Hello' in French?",
-      answer: "Bonjour",
-      tags: ["french", "greetings", "basics"],
-      difficulty: "beginner",
-      audioUrls: null,
-      stats: {
-        totalReviews: 0,
-        correctReviews: 0,
-        incorrectReviews: 0,
-        streak: 0,
-        lastReviewedAt: null
-      },
-      history: []
-    },
-    {
-      question: "What is 'Thank you' in Spanish?",
-      answer: "Gracias",
-      tags: ["spanish", "courtesy", "basics"],
-      difficulty: "beginner",
-      audioUrls: null,
-      stats: {
-        totalReviews: 0,
-        correctReviews: 0,
-        incorrectReviews: 0,
-        streak: 0,
-        lastReviewedAt: null
-      },
-      history: []
-    },
-    {
-      question: "What is 'Good morning' in Japanese?",
-      answer: "Ohayou gozaimasu",
-      tags: ["japanese", "greetings", "basics"],
-      difficulty: "intermediate",
-      audioUrls: null,
-      stats: {
-        totalReviews: 0,
-        correctReviews: 0,
-        incorrectReviews: 0,
-        streak: 0,
-        lastReviewedAt: null
-      },
-      history: []
-    }
-  ],
   "Mathematics": [
     {
       question: "What is 2 + 2?",
