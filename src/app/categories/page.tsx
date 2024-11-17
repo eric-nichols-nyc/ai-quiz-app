@@ -19,9 +19,7 @@ const fetchCategories = async () => {
 };
 
 const CategoriesPage = async() => {
-    const categories = await fetchCategories();
-    console.log('categories ', categories);
- 
+    const categories = await fetchCategories(); 
 
     return (
         <div className="w-full">
