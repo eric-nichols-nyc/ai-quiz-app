@@ -29,7 +29,7 @@ export async function createCategory(cat: Category) {
 
 
 // get all categories for a user
-export async function getCategories() {
+export async function getCategories():Promise<Category[]> {
     const { userId } = auth();
     if (!userId) {
         throw new Error("Unauthorized");

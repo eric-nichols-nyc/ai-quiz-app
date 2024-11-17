@@ -1,34 +1,38 @@
-import React from 'react';
-import CategoryList from '@/components/CategoryList';
-import { auth } from '@clerk/nextjs/server';
-import { getCategories } from '@/actions/actions';
-const fetchCategories = async () => {
-    const { userId } = auth(); // Get user ID using Clerk auth
-    if (!userId) {
-        console.error("Unauthorized");
-        return;
-    }
+import React from "react";
+import CategoryList from "@/components/CategoryList";
+import { auth } from "@clerk/nextjs/server";
+import { getCategories } from "@/actions/actions";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 
-    try {
-        const categories = await getCategories(); // Call the getCategories action
-        console.log("User's categories:", userId, categories);
-        return categories; // Log the categories
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
+const CategoriesPage = async () => {
+  // check if user is authenticated
+  const { userId } = auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["categories"],
+    queryFn: async () => await getCategories(),
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <div className="w-full">
+        <h1>Your Categories</h1>
+        {<CategoryList />}
+      </div>
+    </HydrationBoundary>
+  );
 };
 
-const CategoriesPage = async() => {
-    const categories = await fetchCategories(); 
-
-    return (
-        <div className="w-full">
-            <h1>Your Categories</h1>
-            {
-                categories ? <CategoryList categories={categories} /> : <div>No categories found</div>
-            }
-        </div>
-    );
-};
-
-export default CategoriesPage; 
+export default CategoriesPage;
