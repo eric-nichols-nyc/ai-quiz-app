@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CatCard } from './CatCard';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Category } from '@prisma/client';
-import { createCategory, deleteCategory } from '@/actions/actions'; // Import your deleteCategory function
+import { createCategory, deleteCategory, getCategories } from '@/actions/actions'; // Import your deleteCategory function
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,6 +21,7 @@ const CategoryList = () => {
     const queryClient = useQueryClient();
     const { data: categories, isLoading, error } = useQuery<Category[]>({
         queryKey: ['categories'],
+        queryFn: getCategories, // Use the getCategories function to fetch data
         staleTime: Infinity // Optionally prevent refetching
     });
 

@@ -28,17 +28,23 @@ export async function createCategory(name: string): Promise<Category> {
 
 
 // get all categories for a user
-export async function getCategories():Promise<Category[]> {
+export async function getCategories(): Promise<Category[]> {
     const { userId } = auth();
     if (!userId) {
         throw new Error("Unauthorized");
     }
-    const categories = await prisma.category.findMany({
-        where: {
-            userId
-        }
-    });
-    return categories;
+
+    try {
+        const categories = await prisma.category.findMany({
+            where: {
+                userId
+            }
+        });
+        return categories;
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        throw new Error("Failed to fetch categories"); // Optionally rethrow or handle the error
+    }
 }
 
 // get a category by id
