@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CatCard } from './CatCard';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Category } from '@prisma/client';
-import { createCategory } from '@/actions/actions'; // Import your createCategory function
+import { createCategory, deleteCategory } from '@/actions/actions'; // Import your deleteCategory function
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -54,6 +54,22 @@ const CategoryList = () => {
         }
     });
 
+    const deleteMutation = useMutation<void, Error, string>({
+        mutationFn: deleteCategory,
+        onMutate: async(categoryId) => {
+            console.log("Mutating category:", categoryId);
+            queryClient.invalidateQueries({queryKey: ['categories']}); 
+            queryClient.setQueryData(['categories'], (prevCategories: Category[]) => prevCategories.filter(category => category.id !== categoryId));
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({queryKey: ['categories']}); // Invalidate categories query to refetch
+        },
+        onError: (error) => {
+            console.error("Error deleting category:", error);
+        }
+    });
+
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         mutation.mutate(newCategoryName.name); // Adjust according to your createCategory function
@@ -64,7 +80,7 @@ const CategoryList = () => {
             {isLoading && <div>Loading...</div>}
             {error && <div>Error: {error.message}</div>}
             {categories?.map((category) => (
-                <CatCard key={category.id} category={category} />
+                <CatCard key={category.id} category={category} onDelete={() => deleteMutation.mutate(category.id)}/>
             ))}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}> {/* Control dialog open state */}
             <DialogTrigger asChild>

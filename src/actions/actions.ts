@@ -57,3 +57,20 @@ export async function getCardsByCategoryId(id: string): Promise<Card[]> {
     });
     return cards;
 }
+
+export async function deleteCategory(id: string): Promise<void> {
+    const { userId } = auth();
+    if (!userId) {
+        throw new Error("Unauthorized");
+    }
+
+    try {
+        console.log("Deleting category:", id, userId);
+        await prisma.category.delete({
+            where: { id }
+        });
+    } catch (error) {
+        console.error("Error deleting category:", error);
+        throw new Error("Failed to delete category");
+    }
+}

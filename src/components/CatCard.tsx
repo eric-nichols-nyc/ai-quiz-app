@@ -8,14 +8,10 @@ import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, 
 
 type CatCardProps = {
     category: Category;
+    onDelete: () => void;
 }
-export function CatCard({ category }: CatCardProps) {
+export function CatCard({ category, onDelete }: CatCardProps) {
     const [isDialogOpen, setDialogOpen] = useState(false);
-
-    const handleDelete = () => {
-        console.log(`Deleting category: ${category.id}`);
-        setDialogOpen(false);
-    };
 
     return (
         <Card className="w-full p-4 transition-transform transform hover:shadow-lg rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white">
@@ -39,7 +35,7 @@ export function CatCard({ category }: CatCardProps) {
                             </AlertDialogDescription>
                             <div className="flex justify-end">
                                 <AlertDialogCancel onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={handleDelete} className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition">Delete</AlertDialogAction>
+                                <AlertDialogAction onClick={onDelete} className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition">Delete</AlertDialogAction>
                             </div>
                         </AlertDialogContent>
                     </AlertDialog>
