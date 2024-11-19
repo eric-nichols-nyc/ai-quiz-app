@@ -19,6 +19,7 @@ export async function createCategory(name: string): Promise<Category> {
                 userId
             }
         });
+        console.log("Category created:", category);
         return category;
     } catch (error) {
         console.error("Error creating category:", error);
@@ -40,6 +41,7 @@ export async function getCategories(): Promise<Category[]> {
                 userId
             }
         });
+        console.log("Categories fetched:", categories);
         return categories;
     } catch (error) {
         console.error("Error fetching categories:", error);
