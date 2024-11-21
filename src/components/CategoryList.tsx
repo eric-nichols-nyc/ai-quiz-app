@@ -26,7 +26,7 @@ const CategoryList = () => {
   const {
     data: categories,
     isLoading,
-    error,
+    // error,
   } = useQuery<Category[]>({
     queryKey: ["categories"],
     queryFn: getCategories, // Use the getCategories function to fetch data
@@ -139,7 +139,7 @@ const CategoryList = () => {
         </DialogContent>
       </Dialog>
       {isLoading && <div>Loading...</div>}
-      {error && <div>Error: {error.message}</div>}
+      {/* {error && <div>Error: {error.message}</div>} */}
       {categories?.map((category) => (
         <CatCard
           key={category.id}

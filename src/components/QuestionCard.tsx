@@ -9,8 +9,8 @@ type QuestionCardProps = {
     question: { id: string; question: string; answer: string };
     onEdit: (id: string) => void;
     onDelete: (id: string) => void;
-    isAnswerVisible: boolean;
-    toggleAnswerVisibility: () => void;
+    isAnswerVisible?: boolean;
+    toggleAnswerVisibility?: () => void;
 };
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ question, onEdit, onDelete, isAnswerVisible, toggleAnswerVisibility }) => {

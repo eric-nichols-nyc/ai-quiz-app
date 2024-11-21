@@ -4,12 +4,10 @@ import prisma from "@/lib/prisma";
 import { Card, Category } from "@prisma/client";
 
 export async function createCategory(name: string): Promise<Category> {
-    // find user using clerk session
     const { userId } = auth();
     if (!userId) {
         throw new Error("Unauthorized");
     }
-    // create category in user's account
 
     try {
         console.log("Creating category:", name, userId);
@@ -19,11 +17,10 @@ export async function createCategory(name: string): Promise<Category> {
                 userId
             }
         });
-        console.log("Category created:", category);
         return category;
     } catch (error) {
         console.error("Error creating category:", error);
-        throw new Error("Failed to create category"); // Optionally rethrow or handle the error
+        throw new Error("Failed to create category");
     }
 }
 

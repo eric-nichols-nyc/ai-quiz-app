@@ -4,6 +4,8 @@ import { sampleCards } from "@/data/sampleData";
 import QuestionList from "@/components/QuestionList";
 import { Button } from "@/components/ui/button";
 import AddQuestionDialog from "@/components/AddQuestionDialog";
+import { getCardsByCategoryId } from "@/actions/actions";
+import { useQuery } from "@tanstack/react-query";
 
 const ManagePage = ({ params }: { params: { categoryId: string } }) => {
   const { categoryId } = params;
@@ -19,6 +21,14 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
     // Implement your delete logic here
   };
 
+  // get the cards for the category
+  const { data: cards, isLoading, isError } = useQuery({
+    queryKey: ["cards", categoryId],
+    queryFn: () => getCardsByCategoryId(categoryId),
+  });
+
+  console.log(cards);
+
   return (
     <>
       <div className="p-4 w-full">
@@ -32,6 +42,7 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
           questions={sampleCards}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          categoryId={categoryId}
         />
       </div>
 
