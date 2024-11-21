@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { addQuestionToCategorySchema } from "@/schemas";
 
 interface AddQuestionDialogProps {
   open: boolean;
@@ -21,9 +22,16 @@ interface AddQuestionDialogProps {
 const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChange, onSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Form submitted");
     const formData = new FormData(e.currentTarget);
     const question = formData.get("question") as string;
     const answer = formData.get("answer") as string;
+    // validate the form data
+    const validationResult = addQuestionToCategorySchema.safeParse({ question, answer });
+    if (!validationResult.success) {
+      console.error("Invalid form data:", validationResult.error);
+      return;
+    }
     onSubmit(question, answer);
   };
   return (
@@ -40,21 +48,22 @@ const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChang
             <Label htmlFor="question" className="text-right">
               Question
             </Label>
-            <Textarea id="question" className="col-span-3" />
+            <Textarea id="question" name="question" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="answer" className="text-right">
               Answer
             </Label>
-            <Textarea id="answer" className="col-span-3" />
+            <Textarea id="answer" name="answer" className="col-span-3" />
           </div>
-        </form>
         <DialogFooter>
           <Button type="submit">Save Question</Button>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
         </DialogFooter>
+        </form>
+
       </DialogContent>
     </Dialog>
   );
