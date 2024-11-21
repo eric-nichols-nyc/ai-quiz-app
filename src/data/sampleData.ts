@@ -7,6 +7,8 @@ export const sampleCategories: Category[] = [ // {{ edit_2 }}
         index: 0,
         cardCount: 2,
         userId: 'user1', // Replace with a valid user ID
+        createdAt: new Date(),
+        updatedAt: new Date(),
     },
     {
         id: '2',
@@ -14,6 +16,8 @@ export const sampleCategories: Category[] = [ // {{ edit_2 }}
         index: 1,
         cardCount: 2,
         userId: 'user1', // Replace with a valid user ID
+        createdAt: new Date(),
+        updatedAt: new Date(),
     },
 ];
 
