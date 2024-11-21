@@ -63,6 +63,15 @@ export async function getCardsByCategoryId(id: string): Promise<Card[]> {
     return cards;
 }
 
+
+// get the category name
+export async function getCategoryName(id: string): Promise<string | null> {
+    const category = await prisma.category.findUnique({
+        where: { id }
+    });
+    return category?.name || null;
+}
+
 export async function deleteCategory(id: string): Promise<void> {
     const { userId } = auth();
     if (!userId) {

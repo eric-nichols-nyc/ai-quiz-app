@@ -1,7 +1,10 @@
-import React from 'react';
+"use client";
+import React, { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/actions/actions';
 import QuestionCard from './QuestionCard';
+import { Button } from './ui/button';
+import AddQuestionDialog from "./AddQuestionDialog";
 
 type QuestionListProps = {
     questions: { id: string; question: string; answer: string }[];
@@ -11,17 +14,14 @@ type QuestionListProps = {
 };
 
 const QuestionList: React.FC<QuestionListProps> = ({ questions, onEdit, onDelete, categoryId }) => {
-    const { data: categories, isLoading } = useQuery({
-        queryKey: ['categories'],
-        queryFn: getCategories,
-    });
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const category = categories?.find(cat => cat.id === categoryId);
 
     return (
         <div>
-            {isLoading && <div>Loading categories...</div>}
-            {category && <h2 className="font-bold text-lg">{category.name}</h2>}
+            <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
+          Add Question
+        </Button>
             {questions.map((question) => (
                 <QuestionCard
                     key={question.id}
@@ -32,6 +32,9 @@ const QuestionList: React.FC<QuestionListProps> = ({ questions, onEdit, onDelete
                     toggleAnswerVisibility={() => {}}
                 />
             ))}
+
+<AddQuestionDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+
         </div>
     );
 };

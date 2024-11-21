@@ -1,15 +1,20 @@
 "use client";
-import React, { useState } from "react";
 import { sampleCards } from "@/data/sampleData";
 import QuestionList from "@/components/QuestionList";
 import { Button } from "@/components/ui/button";
 import AddQuestionDialog from "@/components/AddQuestionDialog";
-import { getCardsByCategoryId } from "@/actions/actions";
+import { getCardsByCategoryId, getCategoryName } from "@/actions/actions";
 import { useQuery } from "@tanstack/react-query";
+import Breadcrumbs from "@/components/Breadcrumbs"; // Import the Breadcrumbs component
+
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Categories", href: "/categories" },
+  { label: "Question List" } // Current page, no href
+];
 
 const ManagePage = ({ params }: { params: { categoryId: string } }) => {
   const { categoryId } = params;
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleEdit = (id: string) => {
     console.log(`Edit question with id: ${id}`);
@@ -27,17 +32,25 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
     queryFn: () => getCardsByCategoryId(categoryId),
   });
 
+  // get the category name
+  const { data: category } = useQuery({
+    queryKey: ["category", categoryId],
+    queryFn: () => getCategoryName(categoryId),
+  });
+
   console.log(cards);
 
   return (
     <>
+      {isLoading && <div>Loading categories...</div>}
+
       <div className="p-4 w-full">
+      <Breadcrumbs items={breadcrumbItems} /> {/* Add Breadcrumbs here */}
+
         <h2 className="text-2xl font-bold mb-4">
-          Manage Questions in Category {categoryId}
+          {category}
         </h2>
-        <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
-          Add Question
-        </Button>
+   
         <QuestionList
           questions={sampleCards}
           onEdit={handleEdit}
@@ -46,7 +59,6 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
         />
       </div>
 
-      <AddQuestionDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </>
   );
 };

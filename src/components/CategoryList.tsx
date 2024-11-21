@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Breadcrumbs from './Breadcrumbs'; // Import the Breadcrumbs component
 
 const CategoryList = () => {
   const queryClient = useQueryClient();
@@ -98,8 +99,25 @@ const CategoryList = () => {
     mutation.mutate(newCategoryName.name); // Adjust according to your createCategory function
   };
 
+  // Define breadcrumb items dynamically
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Categories", href: "/categories" },
+    { label: "Category List" } // Current page, no href
+  ];
+
   return (
     <div className="flex flex-col gap-4 p-4 items-center">
+      <Breadcrumbs items={breadcrumbItems} /> {/* Pass dynamic items here */}
+      {isLoading && <div>Loading...</div>}
+      {/* {error && <div>Error: {error.message}</div>} */}
+      {categories?.map((category) => (
+        <CatCard
+          key={category.id}
+          category={category}
+          onDelete={() => deleteMutation.mutate(category.id)}
+        />
+      ))}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {" "}
         {/* Control dialog open state */}
@@ -138,15 +156,6 @@ const CategoryList = () => {
           </form>
         </DialogContent>
       </Dialog>
-      {isLoading && <div>Loading...</div>}
-      {/* {error && <div>Error: {error.message}</div>} */}
-      {categories?.map((category) => (
-        <CatCard
-          key={category.id}
-          category={category}
-          onDelete={() => deleteMutation.mutate(category.id)}
-        />
-      ))}
     </div>
   );
 };
