@@ -1,8 +1,5 @@
 "use client";
-import { sampleCards } from "@/data/sampleData";
 import QuestionList from "@/components/QuestionList";
-import { Button } from "@/components/ui/button";
-import AddQuestionDialog from "@/components/AddQuestionDialog";
 import { getCardsByCategoryId, getCategoryName } from "@/actions/actions";
 import { useQuery } from "@tanstack/react-query";
 import Breadcrumbs from "@/components/Breadcrumbs"; // Import the Breadcrumbs component
@@ -50,9 +47,8 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
         <h2 className="text-2xl font-bold mb-4">
           {category}
         </h2>
-   
         <QuestionList
-          questions={sampleCards}
+          questions={cards || []}
           onEdit={handleEdit}
           onDelete={handleDelete}
           categoryId={categoryId}

@@ -24,6 +24,23 @@ export async function createCategory(name: string): Promise<Category> {
     }
 }
 
+export async function deleteCategory(id: string): Promise<void> {
+    const { userId } = auth();
+    if (!userId) {
+        throw new Error("Unauthorized");
+    }
+
+    try {
+        console.log("Deleting category:", id, userId);
+        await prisma.category.delete({
+            where: { id }
+        });
+    } catch (error) {
+        console.error("Error deleting category:", error);
+        throw new Error("Failed to delete category");
+    }
+}
+
 
 // get all categories for a user
 export async function getCategories(): Promise<Category[]> {
@@ -72,19 +89,21 @@ export async function getCategoryName(id: string): Promise<string | null> {
     return category?.name || null;
 }
 
-export async function deleteCategory(id: string): Promise<void> {
+// add a question to a category
+export async function addQuestionToCategory(categoryId: string, question: string, answer: string): Promise<Card> {
     const { userId } = auth();
     if (!userId) {
         throw new Error("Unauthorized");
     }
 
-    try {
-        console.log("Deleting category:", id, userId);
-        await prisma.category.delete({
-            where: { id }
-        });
-    } catch (error) {
-        console.error("Error deleting category:", error);
-        throw new Error("Failed to delete category");
-    }
+    const card = await prisma.card.create({
+        data: { question, answer, categoryId, userId, difficulty: "easy", stats: { create: {} } }
+    });
+    return card;
+}
+
+// return the user id
+export async function getUserId(): Promise<string | null> {
+    const { userId } = auth();
+    return userId || null;
 }

@@ -15,9 +15,17 @@ import { Textarea } from "@/components/ui/textarea";
 interface AddQuestionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSubmit: (question: string, answer: string) => void;
 }
 
-const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChange }) => {
+const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChange, onSubmit }) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const question = formData.get("question") as string;
+    const answer = formData.get("answer") as string;
+    onSubmit(question, answer);
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[825px]">
@@ -27,7 +35,7 @@ const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChang
             Fill in the details for the new question.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="question" className="text-right">
               Question
@@ -40,7 +48,7 @@ const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChang
             </Label>
             <Textarea id="answer" className="col-span-3" />
           </div>
-        </div>
+        </form>
         <DialogFooter>
           <Button type="submit">Save Question</Button>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
