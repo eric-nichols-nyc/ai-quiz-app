@@ -109,6 +109,15 @@ export async function deleteQuestionFromCategory(id: string): Promise<void> {
     });
 }
 
+// update a question
+export async function updateQuestion(id: string, question: string, answer: string): Promise<void> {
+    console.log("Updating question action:", id, question, answer);
+    await prisma.card.update({
+        where: { id },
+        data: { question, answer }
+    });
+}
+
 // return the user id
 export async function getUserId(): Promise<string | null> {
     const { userId } = auth();

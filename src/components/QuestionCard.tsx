@@ -7,7 +7,7 @@ import AlertDialog from '@/components/AlertDialog';
 
 type QuestionCardProps = {
     question: { id: string; question: string; answer: string };
-    onEdit: (id: string) => void;
+    onEdit: ({id, question, answer}: {id: string, question: string, answer: string}) => void;
     onDelete: (id: string) => void;
     isAnswerVisible?: boolean;
     toggleAnswerVisibility?: () => void;
@@ -59,7 +59,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, onEdit, onDelete,
                 question={{ id: question.id, text: question.question, answer: question.answer }}
                 onSave={(updatedQuestion) => {
                     console.log('Updated Question:', updatedQuestion);
-                    onEdit(updatedQuestion.id); // Call the onEdit prop to handle the update
+                    onEdit({id: updatedQuestion.id, question: updatedQuestion.text, answer: updatedQuestion.answer}); // Call the onEdit prop to handle the update
                     setEditDialogOpen(false);
                 }}
             />

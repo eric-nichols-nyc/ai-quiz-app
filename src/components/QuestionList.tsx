@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "@/actions/actions";
+import { getCategories, updateQuestion } from "@/actions/actions";
 import QuestionCard from "./QuestionCard";
 import { Button } from "./ui/button";
 import AddQuestionDialog from "./AddQuestionDialog";
@@ -17,7 +17,7 @@ const QuestionList: React.FC<QuestionListProps> = ({
   questions,
   categoryId,
 }) => {
-  const addQuestion = useAddQuestion(categoryId);
+  const { addQuestion, updateQuestionMutation } = useAddQuestion(categoryId);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleAddQuestion = async (question: string, answer: string) => {
@@ -25,12 +25,13 @@ const QuestionList: React.FC<QuestionListProps> = ({
     addQuestion({ categoryId, question, answer });
   };
 
-   const handleEdit = (id: string) => {
-    console.log(`Edit question with id: ${id}`);
-    // Implement your edit logic here
+   const handleEdit = ({id, question, answer}: {id: string, question: string, answer: string}) => {
+    updateQuestionMutation({id, question, answer});
   };
 
   const deleteQuestion = useDeleteQuestion();
+
+  
 
   return (
     <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">

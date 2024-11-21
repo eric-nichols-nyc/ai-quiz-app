@@ -1,8 +1,14 @@
-import { addQuestionToCategory } from "@/actions/actions";
+import { addQuestionToCategory, updateQuestion } from "@/actions/actions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type AddQuestionProps = {
     categoryId: string;
+    question: string;
+    answer: string;
+}
+
+type UpdateQuestionProps = {
+    id: string;
     question: string;
     answer: string;
 }
@@ -20,5 +26,16 @@ export default function useAddQuestion(categoryId: string) {
         }
     });
 
-    return addQuestion;
+    const { mutate: updateQuestionMutation } = useMutation({
+        mutationFn: (props: UpdateQuestionProps) => updateQuestion(props.id, props.question, props.answer),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["cards", categoryId] });
+            console.log("Question updated successfully");
+        },
+        onError: (error: Error) => {
+            console.error("Error updating question:", error);
+        }
+    });
+
+    return { addQuestion, updateQuestionMutation };
 }
