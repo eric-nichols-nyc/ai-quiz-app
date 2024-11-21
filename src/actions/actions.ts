@@ -91,7 +91,7 @@ export async function getCategoryName(id: string): Promise<string | null> {
 
 // add a question to a category
 export async function addQuestionToCategory(categoryId: string, question: string, answer: string): Promise<Card> {
-    const { userId } = auth();
+    const userId  = await getUserId();
     if (!userId) {
         throw new Error("Unauthorized");
     }
@@ -100,6 +100,13 @@ export async function addQuestionToCategory(categoryId: string, question: string
         data: { question, answer, categoryId, userId, difficulty: "easy", stats: { create: {} } }
     });
     return card;
+}
+
+// delete a question from a category
+export async function deleteQuestionFromCategory(id: string): Promise<void> {
+    await prisma.card.delete({
+        where: { id }
+    });
 }
 
 // return the user id

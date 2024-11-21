@@ -13,16 +13,6 @@ const breadcrumbItems = [
 const ManagePage = ({ params }: { params: { categoryId: string } }) => {
   const { categoryId } = params;
 
-  const handleEdit = (id: string) => {
-    console.log(`Edit question with id: ${id}`);
-    // Implement your edit logic here
-  };
-
-  const handleDelete = (id: string) => {
-    console.log(`Delete question with id: ${id}`);
-    // Implement your delete logic here
-  };
-
   // get the cards for the category
   const { data: cards, isLoading, isError } = useQuery({
     queryKey: ["cards", categoryId],
@@ -49,8 +39,6 @@ const ManagePage = ({ params }: { params: { categoryId: string } }) => {
         </h2>
         <QuestionList
           questions={cards || []}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
           categoryId={categoryId}
         />
       </div>

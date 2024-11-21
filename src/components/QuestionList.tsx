@@ -6,30 +6,34 @@ import QuestionCard from "./QuestionCard";
 import { Button } from "./ui/button";
 import AddQuestionDialog from "./AddQuestionDialog";
 import useAddQuestion from "@/hooks/useAddQuestion";
+import useDeleteQuestion from "@/hooks/useDeleteQuestion";
 
 type QuestionListProps = {
   questions: { id: string; question: string; answer: string }[];
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
   categoryId: string;
 };
 
 const QuestionList: React.FC<QuestionListProps> = ({
   questions,
-  onEdit,
-  onDelete,
   categoryId,
 }) => {
   const addQuestion = useAddQuestion(categoryId);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleAddQuestion = async (question: string, answer: string) => {
-    setIsDialogOpen(true);
+    setIsDialogOpen(false);
     addQuestion({ categoryId, question, answer });
   };
 
+   const handleEdit = (id: string) => {
+    console.log(`Edit question with id: ${id}`);
+    // Implement your edit logic here
+  };
+
+  const deleteQuestion = useDeleteQuestion();
+
   return (
-    <div>
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
       <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
         Add Question
       </Button>
@@ -37,8 +41,8 @@ const QuestionList: React.FC<QuestionListProps> = ({
         <QuestionCard
           key={question.id}
           question={question}
-          onEdit={onEdit}
-          onDelete={onDelete}
+          onEdit={handleEdit}
+          onDelete={() => deleteQuestion(question.id)}
           isAnswerVisible={true}
           toggleAnswerVisibility={() => {}}
         />
