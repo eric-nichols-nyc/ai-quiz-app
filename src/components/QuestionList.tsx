@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import AddQuestionDialog from "./AddQuestionDialog";
 import useAddQuestion from "@/hooks/useAddQuestion";
 import useDeleteQuestion from "@/hooks/useDeleteQuestion";
+import { Card } from "./ui/card";
+import { Plus } from "lucide-react";
 
 type QuestionListProps = {
   questions: { id: string; question: string; answer: string }[];
@@ -31,9 +33,17 @@ const QuestionList: React.FC<QuestionListProps> = ({
 
   return (
     <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-      <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
-        Add Question
-      </Button>
+      <Card 
+        className="w-full p-4 flex items-center justify-center cursor-pointer hover:bg-gray-50"
+        onClick={() => setIsDialogOpen(true)}
+        role="button"
+        tabIndex={0}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <Plus className="h-8 w-8 text-gray-500" />
+          <span className="font-semibold text-gray-500">Add Question</span>
+        </div>
+      </Card>
       {questions.map((question) => (
         <QuestionCard
           key={question.id}

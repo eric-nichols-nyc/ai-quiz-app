@@ -34,7 +34,7 @@ export default function RootLayout({
         <TanstackProvider>
 
           <StickyHeader />
-          <div className="flex flex-col items-center border rounded-lg p-4">
+          <div className="flex flex-col items-center rounded-lg p-4">
           {children}
             </div>
           </TanstackProvider>
