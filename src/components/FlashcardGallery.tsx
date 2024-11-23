@@ -28,7 +28,6 @@ const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
           key={currentCardIndex}
           question={flashcards[currentCardIndex].question}
           answer={flashcards[currentCardIndex].answer}
-          isFlipped={isFlipped}
         />
       </div>
       <div className="flex justify-between items-center gap-3">

@@ -1,35 +1,62 @@
-import React, { useState } from "react"; // Import React and useState hook
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card"
 
-// Define the props type for the Flashcard component
+// Define TypeScript interface for component props
 type FlashcardProps = {
-  question: string; // The question text to display
-  answer: string;   // The answer text to display
+  question: string; // Text shown on front of card
+  answer: string;   // Text shown on back of card
 };
 
-// Flashcard component definition
-const Flashcard = ({ question, answer, isFlipped }: FlashcardProps & { isFlipped: boolean }) => {
-  // State to manage whether the flashcard is flipped or not
-  const [flipped, setFlipped] = useState(isFlipped); // Initialize state with the isFlipped prop
+/**
+ * Flashcard Component
+ * Renders an interactive flashcard that can be flipped to reveal an answer
+ * 
+ * @param {string} question - The question text displayed on the front
+ * @param {string} answer - The answer text displayed on the back
+ * @returns {JSX.Element} A flippable card component
+ */
+const Flashcard = ({ question, answer }: FlashcardProps) => {
+  // Track whether card is showing question (false) or answer (true)
+  const [isFlipped, setIsFlipped] = useState(false);
 
-  // Determine the current text to display based on the flipped state
-  const currentText = flipped ? answer : question;
-
+  /**
+   * Toggles the card's flipped state when clicked or triggered
+   */
   const handleFlip = () => {
-    setFlipped(!flipped)
+    setIsFlipped(!isFlipped)
   }
 
   return (
     <div
-    className="flashcard flex flex-col items-center justify-center"
-    onClick={handleFlip}
+      // Container for the flashcard with click handling
+      className="flashcard-container"
+      onClick={handleFlip}
+      // Keyboard accessibility handlers
+      onKeyDown={(e) => {
+        // Allow flipping with Enter or Space key
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleFlip()
+        }
+      }}
+      // Accessibility attributes
+      tabIndex={0}                                    // Make div focusable
+      role="button"                                   // Indicate it's clickable
+      aria-pressed={isFlipped}                        // Track pressed state for screen readers
+      aria-label={isFlipped ? "Show question" : "Show answer"} // Descriptive label
     >
-      <div
-        className="flex w-[560px] h-[340px] border rounded-lg p-4 items-center justify-center"
-      >
-        <p>{currentText}</p>
-      </div>
+      <Card className={`flashcard ${isFlipped ? 'flipped' : ''}`}>
+        {/* Front face of the card (Question) */}
+        <CardContent className="flashcard-front">
+          <p className="text-lg font-semibold text-center">{question}</p>
+        </CardContent>
+        {/* Back face of the card (Answer) */}
+        <CardContent className="flashcard-back">
+          <p className="text-lg text-center">{answer}</p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
-export default Flashcard; // Export the Flashcard component for use in other files
+export default Flashcard;
