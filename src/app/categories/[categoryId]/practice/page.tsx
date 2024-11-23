@@ -30,9 +30,9 @@ const PracticePage = async ({params}: {params: {categoryId: string}}) => {
   ];
 
   return (
-    <div className="container max-w-3xl p-4">
+    <div className="container max-w-3xl p-4 ">
       <Breadcrumbs items={breadcrumbItems} />
-      <div className="flex w-full items-center justify-center font-semibold text-2xl mb-4">
+      <div className="flex w-full items-center justify-center font-semibold text-2xl mb-4 ">
         <h1>{categoryName}</h1>
       </div>
       <FlashcardGallery flashcards={cards} />

@@ -14,28 +14,58 @@ export function CatCard({ category, onDelete }: CatCardProps) {
     const [isDialogOpen, setDialogOpen] = useState(false);
 
     return (
-        <Card className="w-full p-4 transition-transform transform hover:shadow-lg rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+        <Card className="w-full p-4 transition-transform hover:scale-[1.02] hover:shadow-lg rounded-lg bg-white border border-purple-200">
             <div className="flex justify-between items-center w-full">
-                <Link href={`/categories/${category.name}`} className="text-lg font-semibold hover:underline">{category.name}</Link>
-                <div className="flex gap-2 mt-2">
+                <Link 
+                    href={`/categories/${category.name}`} 
+                    className="text-lg font-semibold text-gray-800 hover:text-purple-600"
+                >
+                    {category.name}
+                </Link>
+                <div className="flex gap-2">
                     <Link href={`/categories/${category.id}/practice`}>
-                        <Button className="bg-white text-blue-500 rounded px-4 py-2 hover:bg-gray-200 transition">Practice</Button>
+                        <Button 
+                            variant="outline"
+                            className="bg-gradient-to-r from-blue-100 to-purple-100 hover:from-blue-200 hover:to-purple-200 text-gray-700 border-purple-200"
+                        >
+                            Practice
+                        </Button>
                     </Link>
                     <Link href={`/categories/${category.id}/manage`}>
-                        <Button className="bg-white text-green-500 rounded px-4 py-2 hover:bg-gray-200 transition">Manage</Button>
+                        <Button 
+                            variant="outline"
+                            className="bg-gradient-to-r from-blue-100 to-purple-100 hover:from-blue-200 hover:to-purple-200 text-gray-700 border-purple-200"
+                        >
+                            Manage
+                        </Button>
                     </Link>
                     <AlertDialog open={isDialogOpen} onOpenChange={setDialogOpen}>
                         <AlertDialogTrigger asChild>
-                            <Button className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition">Delete</Button>
+                            <Button 
+                                variant="outline"
+                                className="bg-white hover:bg-red-50 text-red-600 border-red-200 hover:border-red-300"
+                            >
+                                Delete
+                            </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                All questions will be deleted. This is not undoable.
+                                All questions in this category will be permanently deleted. This action cannot be undone.
                             </AlertDialogDescription>
-                            <div className="flex justify-end">
-                                <AlertDialogCancel onClick={() => setDialogOpen(false)}>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={onDelete} className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition">Delete</AlertDialogAction>
+                            <div className="flex justify-end gap-2">
+                                <AlertDialogCancel 
+                                    onClick={() => setDialogOpen(false)}
+                                    className="bg-white hover:bg-gray-100"
+                                >
+                                    Cancel
+                                </AlertDialogCancel>
+                                <AlertDialogAction 
+                                    onClick={onDelete} 
+                                    className="bg-red-500 hover:bg-red-600 text-white"
+                                >
+                                    Delete
+                                </AlertDialogAction>
                             </div>
                         </AlertDialogContent>
                     </AlertDialog>
