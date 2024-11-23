@@ -31,13 +31,23 @@ export async function deleteCategory(id: string): Promise<void> {
     }
 
     try {
-        console.log("Deleting category:", id, userId);
-        await prisma.category.delete({
-            where: { id }
+        console.log("Deleting category and its cards:", id, userId);
+        
+        // Use a transaction to ensure both operations succeed or fail together
+        await prisma.$transaction(async (tx) => {
+            // Delete all cards in the category first
+            await tx.card.deleteMany({
+                where: { categoryId: id }
+            });
+
+            // Then delete the category
+            await tx.category.delete({
+                where: { id }
+            });
         });
     } catch (error) {
-        console.error("Error deleting category:", error);
-        throw new Error("Failed to delete category");
+        console.error("Error deleting category and cards:", error);
+        throw new Error("Failed to delete category and its cards");
     }
 }
 

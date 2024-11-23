@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { addQuestionToCategorySchema } from "@/schemas";
+import { ZodError } from "zod";
 
 interface AddQuestionDialogProps {
   open: boolean;
@@ -20,20 +21,32 @@ interface AddQuestionDialogProps {
 }
 
 const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChange, onSubmit }) => {
+  const [errors, setErrors] = useState<{ question?: string; answer?: string }>({});
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    setErrors({});
+    
     const formData = new FormData(e.currentTarget);
     const question = formData.get("question") as string;
     const answer = formData.get("answer") as string;
-    // validate the form data
-    const validationResult = addQuestionToCategorySchema.safeParse({ question, answer });
-    if (!validationResult.success) {
-      console.error("Invalid form data:", validationResult.error);
-      return;
+
+    try {
+      const validationResult = addQuestionToCategorySchema.parse({ question, answer });
+      onSubmit(question, answer);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const formattedErrors: { [key: string]: string } = {};
+        error.errors.forEach((err) => {
+          if (err.path) {
+            formattedErrors[err.path[0]] = err.message;
+          }
+        });
+        setErrors(formattedErrors);
+      }
     }
-    onSubmit(question, answer);
   };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[825px]">
@@ -48,22 +61,38 @@ const AddQuestionDialog: React.FC<AddQuestionDialogProps> = ({ open, onOpenChang
             <Label htmlFor="question" className="text-right">
               Question
             </Label>
-            <Textarea id="question" name="question" className="col-span-3" />
+            <div className="col-span-3">
+              <Textarea id="question" name="question" />
+              {errors.question && (
+                <p className="text-sm text-red-500 mt-1">{errors.question}</p>
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="answer" className="text-right">
               Answer
             </Label>
-            <Textarea id="answer" name="answer" className="col-span-3" />
+            <div className="col-span-3">
+              <Textarea id="answer" name="answer" />
+              {errors.answer && (
+                <p className="text-sm text-red-500 mt-1">{errors.answer}</p>
+              )}
+            </div>
           </div>
-        <DialogFooter>
-          <Button type="submit">Save Question</Button>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit">Save Question</Button>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => {
+                setErrors({});
+                onOpenChange(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </DialogFooter>
         </form>
-
       </DialogContent>
     </Dialog>
   );
