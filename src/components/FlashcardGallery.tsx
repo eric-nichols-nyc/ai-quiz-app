@@ -23,7 +23,7 @@ const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
   };
   return (
     <div className="gallery flex items-center flex-col justify-center gap-3">
-      <div className="w-[560px] h-[340px] overflow-hidden shadow-lg rounded-lg">
+      <div className="w-[560px] h-[340px] overflow-hidden ">
         <Flashcard
           key={currentCardIndex}
           question={flashcards[currentCardIndex].question}
