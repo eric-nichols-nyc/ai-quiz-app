@@ -14,10 +14,16 @@ const Flashcard = ({ question, answer, isFlipped }: FlashcardProps & { isFlipped
   // Determine the current text to display based on the flipped state
   const currentText = flipped ? answer : question;
 
+  const handleFlip = () => {
+    setFlipped(!flipped)
+  }
+
   return (
-    <div className="flashcard flex flex-col items-center justify-center">
+    <div
+    className="flashcard flex flex-col items-center justify-center"
+    onClick={handleFlip}
+    >
       <div
-        onClick={() => setFlipped(!flipped)} // Toggle the flipped state on click
         className="flex w-[560px] h-[340px] border rounded-lg p-4 items-center justify-center"
       >
         <p>{currentText}</p>
