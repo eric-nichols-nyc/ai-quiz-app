@@ -2,10 +2,9 @@ import { SignIn } from '@clerk/nextjs'
 
 export default function Page() {
   return (
-    <section className='py-24'>
-      <div className='container flex items-center justify-center'>
-        <SignIn />
-      </div>
-    </section>
+    <div>
+      <h1>Sign In</h1>
+      <SignIn path="/sign-in" routing="path" />
+    </div>
   )
 }
