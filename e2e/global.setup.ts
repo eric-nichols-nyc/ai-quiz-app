@@ -27,8 +27,8 @@ setup("authenticate", async ({ page }) => {
       password: process.env.E2E_CLERK_USER_PASSWORD!,
     },
   });
-  await page.goto("/protected/client");
-  await page.waitForSelector("h1:has-text('This is a protected client-side page')");
+  await page.goto("/categories");
+  await page.waitForSelector("h1:has-text('Your Categories')");
 
   await page.context().storageState({ path: authFile });
 });
