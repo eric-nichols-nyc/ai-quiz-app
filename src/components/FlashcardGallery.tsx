@@ -11,24 +11,43 @@ type FlashcardGalleryProps = {
 const FlashcardGallery = ({ flashcards }: FlashcardGalleryProps) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right' | ''>('');
 
-  const prevCard = () => {
-    setCurrentCardIndex(currentCardIndex - 1);
-    setIsFlipped(false);
-  };
+    const prevCard = () => {
+      setSlideDirection('right');
+      setIsFlipped(false);
+      setTimeout(() => {
+        setCurrentCardIndex(currentCardIndex - 1);
+        setSlideDirection('');
+      }, 300);
+    };
+  
+    const nextCard = () => {
+      setSlideDirection('left');
+      setIsFlipped(false);
+      setTimeout(() => {
+        setCurrentCardIndex(currentCardIndex + 1);
+        setSlideDirection('');
+      }, 300);
+    };
 
-  const nextCard = () => {
-    setCurrentCardIndex(currentCardIndex + 1);
-    setIsFlipped(false);
-  };
+    const handleFlip = () => {
+      if (!slideDirection) {  // Only allow flipping when not transitioning
+        setIsFlipped(!isFlipped);
+      }
+    }
   return (
     <div className="gallery flex items-center flex-col justify-center gap-3">
       <div className="w-[560px] h-[340px] overflow-hidden ">
-        <Flashcard
-          key={currentCardIndex}
-          question={flashcards[currentCardIndex].question}
-          answer={flashcards[currentCardIndex].answer}
-        />
+      <div className={`slide-container size-full ${slideDirection}`} style={{ pointerEvents: slideDirection ? 'none' : 'auto' }}>
+          <Flashcard
+            key={flashcards[currentCardIndex].id || currentCardIndex}
+            question={flashcards[currentCardIndex].question}
+            answer={flashcards[currentCardIndex].answer}
+            isFlipped={isFlipped}
+            onFlip={handleFlip}
+          />
+        </div>
       </div>
       <div className="flex justify-between items-center gap-3">
         <Button 

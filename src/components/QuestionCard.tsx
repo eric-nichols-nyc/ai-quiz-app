@@ -9,13 +9,12 @@ type QuestionCardProps = {
     question: { id: string; question: string; answer: string };
     onEdit: ({id, question, answer}: {id: string, question: string, answer: string}) => void;
     onDelete: (id: string) => void;
-    isAnswerVisible?: boolean;
-    toggleAnswerVisibility?: () => void;
 };
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ question, onEdit, onDelete, isAnswerVisible, toggleAnswerVisibility }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ question, onEdit, onDelete }) => {
     const [isEditDialogOpen, setEditDialogOpen] = useState(false);
     const [isAlertDialogOpen, setAlertDialogOpen] = useState(false);
+    const [isAnswerVisible, setIsAnswerVisible] = useState(false);
 
     const handleEdit = () => {
         setEditDialogOpen(true);
@@ -23,6 +22,10 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, onEdit, onDelete,
 
     const handleDelete = () => {
         setAlertDialogOpen(true);
+    };
+
+    const toggleAnswerVisibility = () => {
+        setIsAnswerVisible(prev => !prev);
     };
 
     return (

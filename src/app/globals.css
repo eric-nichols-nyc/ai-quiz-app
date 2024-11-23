@@ -76,14 +76,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.flashcard-container {
-  perspective: 1000px;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  /* add shadow */
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
+
 
 .flashcard {
   width: 100%;
@@ -112,5 +105,61 @@ body {
 .flashcard-back {
   transform: rotateY(180deg);
 }
+
+
+/* Slide transition styles */
+.slide-container {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Slide animations */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideRight {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Apply animations */
+.slide-container.left {
+  transform: translateX(-100px);
+  animation: slideLeft 0.3s ease forwards;
+}
+
+.slide-container.right {
+  transform: translateX(100px);
+  animation: slideRight 0.3s ease forwards;
+}
+
+.flashcard-container {
+  perspective: 1000px;
+  scale: 0.90;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  /* add shadow */
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add some hover effect
+.flashcard-container:hover .flashcard:not(.flipped) {
+  transform: rotateY(5deg);
+} */
 
 

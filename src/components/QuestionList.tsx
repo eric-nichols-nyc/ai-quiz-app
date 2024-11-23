@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCategories, updateQuestion } from "@/actions/actions";
 import QuestionCard from "./QuestionCard";
 import { Button } from "./ui/button";
 import AddQuestionDialog from "./AddQuestionDialog";
@@ -31,8 +29,6 @@ const QuestionList: React.FC<QuestionListProps> = ({
 
   const deleteQuestion = useDeleteQuestion();
 
-  
-
   return (
     <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
       <Button className="mb-4" onClick={() => setIsDialogOpen(true)}>
@@ -44,8 +40,6 @@ const QuestionList: React.FC<QuestionListProps> = ({
           question={question}
           onEdit={handleEdit}
           onDelete={() => deleteQuestion(question.id)}
-          isAnswerVisible={true}
-          toggleAnswerVisibility={() => {}}
         />
       ))}
 
