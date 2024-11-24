@@ -29,3 +29,11 @@ question: z.string().min(1, {
     path: ["answer"], // This will make the error appear on the answer field
   }
 );
+
+
+// schema to create a category
+export const createCategorySchema = z.object({
+  name: z.string().min(1, {
+    message: "Category name cannot be empty",
+  }),
+});

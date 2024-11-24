@@ -30,14 +30,15 @@ export default defineConfig({
       name: "global setup",
       testMatch: /global\.setup\.ts/,
     },
-    // {
-    //   name: "Main tests",
-    //   testMatch: /.*app.spec.ts/,
-    //   use: {
-    //     ...devices["Desktop Chrome"],
-    //   },
-    //   dependencies: ["global setup"],
-    // },
+    {
+      name: "Category tests",
+      testMatch: /.*category-operations.spec.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "playwright/.clerk/user.json",
+      },
+      dependencies: ["global setup"],
+    },
     {
       name: "Authenticated tests",
       testMatch: /.*authenticated.spec.ts/,

@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Breadcrumbs from './Breadcrumbs'; // Import the Breadcrumbs component
+import { createCategorySchema } from "@/schemas";
 
 const CategoryList = () => {
   const queryClient = useQueryClient();
@@ -36,7 +37,8 @@ const CategoryList = () => {
 
   const [newCategoryName, setNewCategoryName] = useState({ name: "" });
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
-
+  // create error message state
+  const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation<Category, Error, string>({
     mutationFn: createCategory,
     onMutate: async (newCategory) => {
@@ -96,6 +98,13 @@ const CategoryList = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // validate the form data
+    const validationResult = createCategorySchema.safeParse(newCategoryName);
+    if (!validationResult.success) {
+      setErrorMessage(validationResult.error.flatten().fieldErrors?.name?.[0] || "An error occurred");
+      console.error("Validation error:", validationResult.error);
+      return;
+    }
     mutation.mutate(newCategoryName.name); // Adjust according to your createCategory function
   };
 
@@ -123,6 +132,7 @@ const CategoryList = () => {
         {/* Control dialog open state */}
         <DialogTrigger asChild>
           <Button
+            data-testid="add-category-button"
             variant="outline"
             className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500 text-white"
           >
@@ -146,10 +156,10 @@ const CategoryList = () => {
                 value={newCategoryName.name}
                 onChange={(e) => setNewCategoryName({ name: e.target.value })}
                 placeholder="Category Name"
-                required
                 className="col-span-3"
               />
             </div>
+            {errorMessage && <p className="text-red-500 w-full">{errorMessage}</p>}
             <DialogFooter>
               <Button type="submit">Add</Button>
             </DialogFooter>
