@@ -19,8 +19,8 @@ export async function createCategory(name: string): Promise<Category> {
         });
         return category;
     } catch (error) {
-        console.error("Error creating category:", error);
-        throw new Error("Failed to create category");
+        console.error("Error creating category:", error instanceof Error ? error.message : String(error));
+        throw new Error(`Failed to create category: ${error instanceof Error ? error.message : String(error)}`);
     }
 }
 

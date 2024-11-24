@@ -30,28 +30,30 @@ test.describe('Category Operations', () => {
     await expect(page.getByText(/category name cannot be empty/i)).toBeVisible();
   });
 
-//   test('should add and delete a category', async ({ page }) => {
-//     // Generate a unique category name to avoid conflicts
-//     const categoryName = `Test Category ${Date.now()}`;
+  test('should add and delete a category', async ({ page }) => {
+    // Generate a unique category name to avoid conflicts
+    const categoryName = `Test Category ${Date.now()}`;
 
-//     // Click the add category button and fill the form
-//     await page.getByTestId('add-category-button').click();    
-//     await page.getByPlaceholder(/category name/i).fill(categoryName);
-//     await page.getByRole('button', { name: /add/i }).click();
+    // Click the add category button and fill the form
+    await page.getByTestId('add-category-button').click();    
+    await page.getByPlaceholder(/category name/i).fill(categoryName);
+    await page.getByRole('button', { name: /add/i }).click();
 
-//     // Verify the category was created
-//     await expect(page.getByText(categoryName)).toBeVisible();
+    // Verify the category was created
+    await expect(page.getByText(categoryName)).toBeVisible();
 
-//     // Delete the category
-//     const categoryCard = page.getByText(categoryName).locator('..').locator('..');
-//     await categoryCard.hover();
-//     await categoryCard.getByRole('button', { name: /delete/i }).click();
+    // Delete the category
+    const categoryCard = page.getByText(categoryName).locator('..').locator('..');
+    await categoryCard.hover();
 
-//     // Confirm deletion in the dialog
-//     await page.getByRole('button', { name: /confirm/i }).click();
+    // Confirm deletion in the dialog
+    await categoryCard.getByRole('button', { name: /delete/i }).click();
 
-//     // Verify the category was deleted
-//     await expect(page.getByText(categoryName)).not.toBeVisible();
-//   });
+    // Wait for the category to be removed
+    await expect(page.getByText(categoryName)).toBeHidden({ timeout: 10000 });
+    
+    // Optional: Ensure it's completely gone from the DOM
+    await expect(page.getByText(categoryName)).not.toBeVisible({ timeout: 10000 });
+  });
 
 }); 
