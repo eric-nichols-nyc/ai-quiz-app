@@ -49,5 +49,9 @@ export default defineConfig({
       },
       dependencies: ["global setup"],
     },
+    {
+      name: "Unauthenticated tests",
+      testMatch: /.*unauthenticated.spec.ts/,
+    }
   ],
 });
