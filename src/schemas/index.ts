@@ -7,7 +7,7 @@ question: z.string().min(1, {
   }).max(500, {
     message: "Question cannot be longer than 500 characters",
   }).refine(
-    (value) => !value.trim().endsWith('?'), 
+    (value) => value.trim().endsWith('?'), 
     {
       message: "Question must end with a question mark (?)",
     }
@@ -17,7 +17,7 @@ question: z.string().min(1, {
   }).max(1000, {
     message: "Answer cannot exceed 1000 characters",
   }).refine(
-    (value) => value.trim().length >= 20,
+    (value) => value.trim().length >= 5,
     {
       message: "Answer must be at least 20 characters long for completeness",
     }
